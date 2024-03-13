@@ -34,6 +34,7 @@ export const handleSocket = (socket: Socket) => {
     socket.on("room:create", (data: RoomForm) => new Room(data, socket))
     socket.on("room:list", () => Room.list(socket))
     socket.on("room:printboard", () => Room.printBoard(socket))
+    socket.on("room:leave", () => Room.handleDisconnect(socket))
     socket.on("piece:move", (data: { from: POSITION; to: POSITION }) => Room.find(socket)?.game?.board.movePiece(data.from, data.to))
 }
 

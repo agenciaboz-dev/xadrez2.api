@@ -23,6 +23,7 @@ export class Room {
         this.password = data.password
 
         this.join(socket, COLOR.white)
+        socket.broadcast.emit("room:update", this)
     }
 
     static list(socket: Socket) {
