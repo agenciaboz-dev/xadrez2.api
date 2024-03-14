@@ -1,5 +1,4 @@
-import { ChessPiece } from "../ChessPiece"
-import { COLOR, POSITION } from "../chess"
+import { COLOR, Chessboard, POSITION } from "../chess"
 import { Piece } from "./Piece"
 
 export class Pawn extends Piece {
@@ -10,9 +9,8 @@ export class Pawn extends Piece {
         this.label = color == COLOR.white ? "P" : "p"
     }
 
-    canMove(target_position: POSITION, grid: (ChessPiece | null)[][]): boolean {
+    canMove(target_position: POSITION, grid: Chessboard): boolean {
         const sum = this.color == COLOR.white ? -1 : 1
-
 
         if (
             target_position[0] == this.position[0] + sum &&

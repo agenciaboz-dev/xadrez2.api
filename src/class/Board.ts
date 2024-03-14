@@ -1,9 +1,9 @@
 import { Socket } from "socket.io"
 import { ChessPiece } from "./ChessPiece"
-import { POSITION } from "./chess"
+import { Chessboard, POSITION } from "./chess"
 
 export class Board {
-    grid: (ChessPiece | null)[][]
+    grid: Chessboard
 
     constructor() {
         this.grid = new Array(8).fill(null).map(() => new Array(8).fill(null))
@@ -14,10 +14,10 @@ export class Board {
     }
 
     movePiece(from: POSITION, to: POSITION) {
-        const piece = this.grid[from[0]][from[1]]
+        const piece = this.getPiece(from)
+
         if (piece?.canMove(to, this.grid) && this.grid[to[0]][to[1]] === null) {
-            this.grid[to[0]][to[1]] = piece
-            this.grid[from[0]][from[1]] = null
+            piece.move(from, to, this.grid)
         }
 
         this.print()

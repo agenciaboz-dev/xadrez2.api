@@ -1,5 +1,5 @@
 import { ChessPiece } from "../ChessPiece"
-import { COLOR, POSITION } from "../chess"
+import { COLOR, Chessboard, POSITION } from "../chess"
 import { Piece } from "./Piece"
 
 export class Bishop extends Piece {
@@ -10,7 +10,7 @@ export class Bishop extends Piece {
         this.label = color == COLOR.white ? "B" : "b"
     }
 
-    canMove(target_position: POSITION, grid: (ChessPiece | null)[][]): boolean {
+    canMove(target_position: POSITION, grid: Chessboard): boolean {
         const getPiece = (position: POSITION) => {
             const piece = grid[position[0]][position[1]]
             if (piece && piece != this) {
@@ -42,8 +42,6 @@ export class Bishop extends Piece {
                 return false
             }
         }
-
-        
 
         if (target_position[0] != this.position[0] && target_position[1] != this.position[1]) {
             return true
