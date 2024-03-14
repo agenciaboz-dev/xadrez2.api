@@ -21,6 +21,7 @@ export class Board {
         }
 
         this.print()
+        return this.grid
     }
 
     print() {

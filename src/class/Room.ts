@@ -62,10 +62,10 @@ export class Room {
     static movePiece(socket: Socket, from: POSITION, to: POSITION) {
         const room = Room.find(socket)
         if (room) {
-            room.game?.board.movePiece(from, to)
+            const grid = room.game?.board.movePiece(from, to)
             const io = getIoInstance()
 
-            io.to(room.id).emit("piece:move", from, to)
+            io.to(room.id).emit("piece:move", grid)
         }
     }
 
