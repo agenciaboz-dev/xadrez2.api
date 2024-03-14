@@ -13,7 +13,12 @@ export class Pawn extends Piece {
     canMove(target_position: POSITION, grid: (ChessPiece | null)[][]): boolean {
         const sum = this.color == COLOR.white ? -1 : 1
 
-        if (target_position[0] == this.position[0] + sum && grid[target_position[0]][target_position[1]] === null) {
+
+        if (
+            target_position[0] == this.position[0] + sum &&
+            target_position[1] == this.position[1] &&
+            grid[target_position[0]][target_position[1]] === null
+        ) {
             return true
         }
 

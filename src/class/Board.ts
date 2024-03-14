@@ -1,3 +1,4 @@
+import { Socket } from "socket.io"
 import { ChessPiece } from "./ChessPiece"
 import { POSITION } from "./chess"
 
@@ -36,5 +37,32 @@ export class Board {
             console.log(horizontalBorder)
         }
         console.log("    0   1   2   3   4   5   6   7") // Repeat column numbers at the bottom for clarity
+    }
+
+    getPiece(position: POSITION) {
+        const piece = this.grid[position[0]][position[1]]
+        return piece
+    }
+
+    getPieceMovements(position: POSITION, socket?: Socket) {
+        const piece = this.getPiece(position)
+        if (piece) {
+            const positions: POSITION[] = []
+
+            this.grid.forEach((row, x) => {
+                row.forEach((column, y) => {
+                    const position: POSITION = [x, y]
+                    if (piece.canMove(position, this.grid)) {
+                        positions.push(position)
+                    }
+                })
+            })
+
+            socket?.emit("piece:movements", positions)
+
+            return positions
+        }
+
+        return []
     }
 }

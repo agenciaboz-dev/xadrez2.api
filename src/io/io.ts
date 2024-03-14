@@ -5,6 +5,7 @@ import { Socket } from "socket.io"
 import google from "../google"
 import { Room, RoomForm } from "../class/Room"
 import { POSITION } from "../class/chess"
+import { ChessPiece } from "../class/ChessPiece"
 
 let io: SocketIoServer | null = null
 
@@ -35,7 +36,9 @@ export const handleSocket = (socket: Socket) => {
     socket.on("room:list", () => Room.list(socket))
     socket.on("room:printboard", () => Room.printBoard(socket))
     socket.on("room:leave", () => Room.handleDisconnect(socket))
-    socket.on("piece:move", (data: { from: POSITION; to: POSITION }) => Room.find(socket)?.game?.board.movePiece(data.from, data.to))
+
+    socket.on("piece:movements", (position: POSITION) => Room.find(socket)?.game?.board.getPieceMovements(position, socket))
+    socket.on("piece:move", (data: { from: POSITION; to: POSITION }) => Room.movePiece(socket, data.from, data.to))
 }
 
 export default { initializeIoServer, getIoInstance, handleSocket }

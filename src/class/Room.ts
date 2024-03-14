@@ -2,8 +2,9 @@ import { uid } from "uid"
 import { Game } from "./Game"
 import { Player } from "./Player"
 import { Socket } from "socket.io"
-import { COLOR } from "./chess"
+import { COLOR, POSITION } from "./chess"
 import { WithoutFunctions } from "./helpers"
+import { getIoInstance } from "../io/io"
 
 export type RoomForm = Omit<WithoutFunctions<Room>, "id" | "game" | "players">
 
@@ -55,6 +56,16 @@ export class Room {
         const room = Room.find(socket)
         if (room) {
             rooms = rooms.filter((item) => item.id != room.id)
+        }
+    }
+
+    static movePiece(socket: Socket, from: POSITION, to: POSITION) {
+        const room = Room.find(socket)
+        if (room) {
+            room.game?.board.movePiece(from, to)
+            const io = getIoInstance()
+
+            io.to(room.id).emit("piece:move", from, to)
         }
     }
 
