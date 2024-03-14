@@ -5,11 +5,13 @@ export class Piece {
     color: COLOR
     position: POSITION
     label: string
+    moved_times: number
 
     constructor(color: COLOR, position: POSITION) {
         this.color = color
         this.position = position
         this.label = ""
+        this.moved_times = 0
     }
 
     canMove(target_position: POSITION, grid: Chessboard) {
@@ -23,6 +25,7 @@ export class Piece {
     }
 
     move(from: POSITION, to: POSITION, grid: Chessboard) {
+        this.moved_times += 1
         this.position = to
         grid[from[0]][from[1]] = null
         grid[to[0]][to[1]] = this
