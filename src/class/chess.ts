@@ -12,5 +12,3 @@ export enum STATUS {
 }
 
 export type POSITION = [number, number]
-
-export type Chessboard = (ChessPiece | null)[][]

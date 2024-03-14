@@ -1,7 +1,8 @@
 import { Socket } from "socket.io"
 import { ChessPiece } from "./ChessPiece"
-import { Chessboard, POSITION } from "./chess"
+import { POSITION } from "./chess"
 
+export type Chessboard = (ChessPiece | null)[][]
 export class Board {
     grid: Chessboard
 

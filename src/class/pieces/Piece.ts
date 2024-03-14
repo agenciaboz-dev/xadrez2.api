@@ -1,5 +1,5 @@
-import { ChessPiece } from "../ChessPiece"
-import { COLOR, Chessboard, POSITION } from "../chess"
+import { Chessboard } from "../Board"
+import { COLOR, POSITION } from "../chess"
 
 export class Piece {
     color: COLOR
