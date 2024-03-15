@@ -21,12 +21,6 @@ scp package.json ${user}@agencyboz:${path}/
 echo 'syncing dependencies'
 ssh ${user}@agencyboz "source ~/.nvm/nvm.sh; cd ${path}; yarn install --production --frozen-lockfile"
 
-echo 'Uploading prisma to server'
-scp -r prisma ${user}@agencyboz:${path}/
-
-echo 'generating prisma client'
-ssh ${user}@agencyboz "source ~/.nvm/nvm.sh; cd ${path}; npx prisma generate"
-
 echo 'restarting server api'
 ssh ${user}@agencyboz "source ~/.nvm/nvm.sh; cd ${path}; pm2 restart ${api}"
 
