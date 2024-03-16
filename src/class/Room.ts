@@ -22,6 +22,7 @@ export class Room {
         this.id = uid()
         this.name = data.name
         this.password = data.password
+        this.game = new Game(this.players)
 
         this.join(socket, COLOR.white)
         socket.broadcast.emit("room:update", this)
@@ -70,17 +71,11 @@ export class Room {
     }
 
     startGame() {
-        this.game = new Game(this.players)
     }
 
     join(socket: Socket, color: COLOR) {
         this.players.push(new Player(color, socket.id))
         socket.join(this.id)
-
-        if (this.players.length == 1) {
-            this.startGame()
-        }
-
         socket.emit("room:join", this)
     }
 }
