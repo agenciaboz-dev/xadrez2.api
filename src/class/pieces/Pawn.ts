@@ -7,7 +7,7 @@ export class Pawn extends Piece {
 
     constructor(color: COLOR, position: POSITION) {
         super(color, position)
-        this.label = color == COLOR.white ? "P" : "p"
+        this.label = "P"
     }
 
     canMove(target_position: POSITION, grid: Chessboard): boolean {

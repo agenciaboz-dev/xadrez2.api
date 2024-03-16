@@ -7,7 +7,7 @@ export class King extends Piece {
 
     constructor(color: COLOR, position: POSITION) {
         super(color, position)
-        this.label = color == COLOR.white ? "K" : "k"
+        this.label = "K"
     }
 
     canMove(target_position: POSITION, grid: Chessboard): boolean {
@@ -15,8 +15,7 @@ export class King extends Piece {
             return false
         }
 
-        const diff_x = Math.max(target_position[0], this.position[0]) - Math.min(target_position[0], this.position[0])
-        const diff_y = Math.max(target_position[1], this.position[1]) - Math.min(target_position[1], this.position[1])
+        const { diff_x, diff_y } = this.getPositionDiffs(target_position)
 
         if (diff_x > 1 || diff_y > 1) {
             return false

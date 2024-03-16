@@ -30,4 +30,11 @@ export class Piece {
         grid[from[0]][from[1]] = null
         grid[to[0]][to[1]] = this
     }
+
+    getPositionDiffs(target_position: POSITION) {
+        const diff_x = Math.max(this.position[0], target_position[0]) - Math.min(this.position[0], target_position[0])
+        const diff_y = Math.max(this.position[1], target_position[1]) - Math.min(this.position[1], target_position[1])
+
+        return { diff_x, diff_y }
+    }
 }
