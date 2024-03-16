@@ -54,7 +54,7 @@ export class Board {
             this.grid.forEach((row, x) => {
                 row.forEach((column, y) => {
                     const position: POSITION = [x, y]
-                    if (piece.canMove(position, this.grid)) {
+                    if (this.grid[position[0]][position[1]] === null && piece.canMove(position, this.grid)) {
                         positions.push(position)
                     }
                 })

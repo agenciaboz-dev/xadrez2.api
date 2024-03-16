@@ -21,10 +21,6 @@ export class Queen extends Piece {
             return null
         }
 
-        if (getPiece(target_position)) {
-            return false
-        }
-
         const { diff_x, diff_y } = this.getPositionDiffs(target_position)
 
         const isBishop = () => {

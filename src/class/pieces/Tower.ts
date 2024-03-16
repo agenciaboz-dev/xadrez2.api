@@ -21,10 +21,6 @@ export class Tower extends Piece {
             return null
         }
 
-        if (getPiece(target_position)) {
-            return false
-        }
-
         const { diff_x, diff_y } = this.getPositionDiffs(target_position)
 
         if (!!diff_x && !!diff_y) {
