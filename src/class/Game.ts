@@ -4,25 +4,24 @@ import { COLOR, STATUS } from "./chess"
 
 export class Game {
     board: Board
-    players: Player[]
+    players: Player[] = []
     current_turn: COLOR = COLOR.white
     status: STATUS = STATUS.paused
 
-    constructor(players: Player[]) {
+    constructor() {
         this.board = new Board()
-        this.players = players
-
-        this.players.forEach((player) => {
-            player.pieces.forEach((piece) => {
-                this.board.addPiece(piece, piece.position)
-            })
-        })
-
         this.board.print()
     }
 
     switchTurn() {
         this.current_turn = this.current_turn == COLOR.white ? COLOR.black : COLOR.white
+    }
+
+    addPlayer(player: Player) {
+        this.players.push(player)
+        player.pieces.forEach((piece) => {
+            this.board.addPiece(piece, piece.position)
+        })
     }
 
     // toJSON() {

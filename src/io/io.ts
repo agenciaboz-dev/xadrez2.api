@@ -36,6 +36,7 @@ export const handleSocket = (socket: Socket) => {
     socket.on("room:list", () => Room.list(socket))
     socket.on("room:printboard", () => Room.printBoard(socket))
     socket.on("room:leave", () => Room.handleDisconnect(socket))
+    socket.on("room:join", (room_id: string, password: string) => Room.join(room_id, password, socket))
 
     socket.on("piece:movements", (position: POSITION) => Room.find(socket)?.game?.board.getPieceMovements(position, socket))
     socket.on("piece:move", (data: { from: POSITION; to: POSITION }) => Room.movePiece(socket, data.from, data.to))

@@ -12,8 +12,7 @@ export let rooms: Room[] = []
 
 export class Room {
     id: string
-    game: Game | null = null
-    players: Player[] = []
+    game: Game
     name: string
     password: string
 
@@ -22,7 +21,7 @@ export class Room {
         this.id = uid()
         this.name = data.name
         this.password = data.password
-        this.game = new Game(this.players)
+        this.game = new Game()
 
         this.join(socket, COLOR.white)
         socket.broadcast.emit("room:update", this)
@@ -33,7 +32,7 @@ export class Room {
     }
 
     static find(socket: Socket) {
-        const room = rooms.find((item) => item.players.find((player) => player.id == socket.id))
+        const room = rooms.find((item) => item.game.players.find((player) => player.id == socket.id))
         return room
     }
 
@@ -44,12 +43,14 @@ export class Room {
         }
     }
 
-    static join(room_id: string, socket: Socket) {
+    static join(room_id: string, password: string, socket: Socket) {
         if (Room.find(socket)) return
 
         const room = rooms.find((item) => item.id == room_id)
-        if (room) {
+        if (room && room.password == password) {
             room.join(socket, COLOR.black)
+        } else {
+            socket.emit("room:join:error", "wrong password")
         }
     }
 
@@ -63,19 +64,19 @@ export class Room {
     static movePiece(socket: Socket, from: POSITION, to: POSITION) {
         const room = Room.find(socket)
         if (room) {
-            const grid = room.game?.board.movePiece(from, to)
+            const grid = room.game.board.movePiece(from, to)
             const io = getIoInstance()
 
             io.to(room.id).emit("piece:move", grid)
         }
     }
 
-    startGame() {
-    }
+    startGame() {}
 
     join(socket: Socket, color: COLOR) {
-        this.players.push(new Player(color, socket.id))
+        this.game.addPlayer(new Player(color, socket.id))
         socket.join(this.id)
         socket.emit("room:join", this)
+        socket.to(this.id).emit("room:update", this)
     }
 }
