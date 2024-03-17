@@ -6,6 +6,7 @@ export class Piece {
     position: POSITION
     label: string
     moved_times: number
+    captured: Piece[] = []
 
     constructor(color: COLOR, position: POSITION) {
         this.color = color
@@ -36,5 +37,11 @@ export class Piece {
         const diff_y = Math.max(this.position[1], target_position[1]) - Math.min(this.position[1], target_position[1])
 
         return { diff_x, diff_y }
+    }
+
+    attack(from: POSITION, to: POSITION, grid: Chessboard) {
+        const enemy = grid[to[0]][to[1]]!
+        this.captured.push(enemy)
+        this.move(from, to, grid)
     }
 }

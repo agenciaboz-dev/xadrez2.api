@@ -17,8 +17,12 @@ export class Board {
     movePiece(from: POSITION, to: POSITION) {
         const piece = this.getPiece(from)
 
-        if (piece?.canMove(to, this.grid) && this.grid[to[0]][to[1]] === null) {
-            piece.move(from, to, this.grid)
+        if (piece?.canMove(to, this.grid)) {
+            if (this.grid[to[0]][to[1]] === null) {
+                piece.move(from, to, this.grid)
+            } else {
+                piece.attack(from, to, this.grid)
+            }
         }
 
         this.print()
