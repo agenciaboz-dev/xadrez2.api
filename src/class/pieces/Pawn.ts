@@ -11,6 +11,8 @@ export class Pawn extends Piece {
     }
 
     canMove(target_position: POSITION, grid: Chessboard): boolean {
+        if (grid[target_position[0]][target_position[1]] !== null) return false
+        
         const step = this.color == COLOR.white ? -1 : 1
 
         if (target_position[0] == this.position[0] + step && target_position[1] == this.position[1]) {
