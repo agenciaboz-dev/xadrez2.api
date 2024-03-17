@@ -11,13 +11,19 @@ export class Pawn extends Piece {
     }
 
     canMove(target_position: POSITION, grid: Chessboard): boolean {
-        if (grid[target_position[0]][target_position[1]] !== null) return false
-        
+        const { diff_x, diff_y } = this.getPositionDiffs(target_position)
+
         const step = this.color == COLOR.white ? -1 : 1
+
+        if (target_position[0] == this.position[0] + step && diff_x == diff_y && grid[target_position[0]][target_position[1]]) {
+            return true
+        }
+        if (grid[target_position[0]][target_position[1]]) return false
 
         if (target_position[0] == this.position[0] + step && target_position[1] == this.position[1]) {
             return true
         }
+
 
         if (this.moved_times === 0) {
             if (target_position[0] == this.position[0] + step * 2 && target_position[1] == this.position[1]) {
