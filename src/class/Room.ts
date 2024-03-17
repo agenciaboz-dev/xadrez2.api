@@ -65,18 +65,21 @@ export class Room {
         const room = Room.find(socket)
         if (room) {
             const grid = room.game.board.movePiece(from, to)
+            room.game.switchTurn()
             const io = getIoInstance()
 
-            io.to(room.id).emit("piece:move", grid)
+            // io.to(room.id).emit("piece:move", grid)
+            io.to(room.id).emit("room:update", room)
         }
     }
 
     startGame() {}
 
     join(socket: Socket, color: COLOR) {
-        this.game.addPlayer(new Player(color, socket.id))
+        const player = new Player(color, socket.id)
+        this.game.addPlayer(player)
         socket.join(this.id)
-        socket.emit("room:join", this)
+        socket.emit("room:join", this, player)
         socket.to(this.id).emit("room:update", this)
     }
 }
