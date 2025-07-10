@@ -1,0 +1,27 @@
+name: xadrez2.api
+
+services:
+  api:
+    image: agenciaboz/xadrez2.api
+    container_name: xadrez2.api
+    environment:
+      - PORT=4200
+    ports:
+      - "4200:4200"
+
+
+    network_mode: "host"
+
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 256M
+    volumes:
+      - static_volume:/app/static
+
+
+volumes:
+  static_volume:
+    name: "xadrez2_static_files"
