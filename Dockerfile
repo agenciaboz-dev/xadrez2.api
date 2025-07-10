@@ -21,3 +21,4 @@ COPY --from=build /app/dist ./dist
 
 # Start the application
 CMD ["/bin/bash", "-c", "node dist/index.js"]
+
